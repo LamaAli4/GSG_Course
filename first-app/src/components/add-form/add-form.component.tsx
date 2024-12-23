@@ -90,7 +90,7 @@ const AddForm = (props: IProps) => {
         />
       </div>
       <div className="Actions">
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit} style={{color: errorsList.length? "red" : "initial"}} >Submit</button>
         <button onClick={handleClear}>Clear</button>
       </div>
       {
