@@ -33,7 +33,7 @@ const AddForm = (props: IProps) => {
   };
 
   const handleCoursesChange = (list: string[]) => {
-    setStudent({ ...student, coursesList: list });  
+    setStudent({ ...student, coursesList: list });
   };
 
   return (
@@ -47,6 +47,7 @@ const AddForm = (props: IProps) => {
           onChange={(e) => handleChange("name", e.target.value)}
         />
       </div>
+
       <div>
         <label htmlFor="age">Student Age: </label>
         <input
@@ -58,9 +59,7 @@ const AddForm = (props: IProps) => {
           onChange={(e) => handleChange("age", e.target.value)}
         />
       </div>
-      <div>
-        <CoursesListForm onSubmit={handleCoursesChange} value={student.coursesList}/>
-      </div>
+
       <div>
         <label htmlFor="isGraduated">Is Student Graduated: </label>
         <input
@@ -70,12 +69,18 @@ const AddForm = (props: IProps) => {
           onChange={(e) => handleChange("isGraduated", e.target.checked)}
         />
       </div>
+
+      <div>
+        <CoursesListForm
+          onSubmit={handleCoursesChange}
+          value={student.coursesList}
+        />
+      </div>
+
       <div className="Actions">
         <button onClick={handleSubmit}>Submit</button>
         <button onClick={handleClear}>Clear</button>
       </div>
-      <br />
-      <br />
     </div>
   );
 };
