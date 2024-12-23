@@ -13,6 +13,7 @@ const INITIAL_STUDENT = {
 
 interface IProps {
   onSubmit: (std: IStudent) => void;
+  className?: string;
 }
 
 const AddForm = (props: IProps) => {
@@ -37,8 +38,8 @@ const AddForm = (props: IProps) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className= {` wrapper ${props.className}`}>
+      <div className="input">
         <label htmlFor="name">Student Name: </label>
         <input
           id="name"
@@ -48,7 +49,7 @@ const AddForm = (props: IProps) => {
         />
       </div>
 
-      <div>
+      <div className="input">
         <label htmlFor="age">Student Age: </label>
         <input
           id="age"
@@ -60,7 +61,7 @@ const AddForm = (props: IProps) => {
         />
       </div>
 
-      <div>
+      <div className="input">
         <label htmlFor="isGraduated">Is Student Graduated: </label>
         <input
           id="isGraduated"

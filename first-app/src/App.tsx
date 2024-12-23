@@ -56,21 +56,27 @@ function App() {
 
   const handleAbsentChange = (name: string, change: number) => {
     setTotalAbsents(totalAbsents + change);
+    console.log(name)
   };
 
   const handleAddStudent = (newStudent: IStudent) => {
     setStudentsList([newStudent, ...studentsList]);
   };
 
-  const h1Style = { color: "#a3ff55", fontSize: "24px" };
+  const h1Style = { color: "#69247c", fontSize: "24px" };
   return (
-    <div className="main">
+    <div className="main wrapper">
       <h1 style={h1Style}>Welcome to GSG React/Next Course</h1>
 
-      <AddForm onSubmit={handleAddStudent} />
+      <AddForm className= "addForm" onSubmit={handleAddStudent} />
 
-      <button onClick={removeFirst}>Remove First Student</button>
-      <b>Total Absents {totalAbsents}</b>
+      <div className="stats">
+        <button onClick={removeFirst}>Remove First Student</button>
+        <b style={{ fontSize: "12px", fontWeight: 100, color: "gray" }}>
+          Total Absents {totalAbsents}
+        </b>
+      </div>
+
       {studentsList.map((student) => (
         <Student
           key={student.id}
