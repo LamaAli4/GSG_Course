@@ -12,20 +12,19 @@ body {
 
 .main {
   max-width: 600px;
-  background-color: #f9e6cf;
+  background-color: #F9E6CF;
   margin: 0 auto;
-  padding: 0 20px;
-  padding-top: 40px;
+  padding: 30px 20px;
 }
 
 .main h1 {
   margin-top: 0;
 }
 
-.main > .stats {
+.main>.stats {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px ;
+  margin-bottom: 20px;
 }
 
 .main.wrapper {

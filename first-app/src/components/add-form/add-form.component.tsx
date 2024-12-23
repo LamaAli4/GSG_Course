@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./add-form.css";
 import { IStudent } from "../../types";
 import CoursesListForm from "../courses-list-form/courses-list-form.component";
+import { validateStudent } from "../../utils/validation.ts";
 
 const INITIAL_STUDENT = {
   age: 0,
@@ -12,12 +13,14 @@ const INITIAL_STUDENT = {
 };
 
 interface IProps {
-  onSubmit: (std: IStudent) => void;
   className?: string;
+  onSubmit: (std: IStudent) => void;
 }
 
 const AddForm = (props: IProps) => {
   const [student, setStudent] = useState<IStudent>(INITIAL_STUDENT);
+  const [isOpen, setIsOpen] = useState(false);
+  const [errorsList, setErrorsList] = useState<string[]>([]);
 
   const handleChange = (field: string, value: any) => {
     setStudent({ ...student, [field]: value });
@@ -25,8 +28,15 @@ const AddForm = (props: IProps) => {
 
   const handleSubmit = () => {
     const newStudent: IStudent = { ...student, id: Date.now().toString() };
-    props.onSubmit(newStudent);
-    handleClear();
+
+    const errors = validateStudent(newStudent);
+    if (errors.length > 0) {
+      setErrorsList(errors);
+    } else {
+      setErrorsList([]);
+      props.onSubmit(newStudent);
+      handleClear();
+    }
   };
 
   const handleClear = () => {
@@ -38,7 +48,12 @@ const AddForm = (props: IProps) => {
   };
 
   return (
-    <div className= {` wrapper ${props.className}`}>
+    <div className={`wrapper ${props.className} ${isOpen ? "open" : "closed"}`}>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? <span>&and; Close</span> : <span>&or; Open</span>}{" "}
+        {/* {isOpen ? " Close " : " Open "}  */}
+        Add Form
+      </button>
       <div className="input">
         <label htmlFor="name">Student Name: </label>
         <input
@@ -48,7 +63,6 @@ const AddForm = (props: IProps) => {
           onChange={(e) => handleChange("name", e.target.value)}
         />
       </div>
-
       <div className="input">
         <label htmlFor="age">Student Age: </label>
         <input
@@ -60,7 +74,6 @@ const AddForm = (props: IProps) => {
           onChange={(e) => handleChange("age", e.target.value)}
         />
       </div>
-
       <div className="input">
         <label htmlFor="isGraduated">Is Student Graduated: </label>
         <input
@@ -70,18 +83,29 @@ const AddForm = (props: IProps) => {
           onChange={(e) => handleChange("isGraduated", e.target.checked)}
         />
       </div>
-
       <div>
         <CoursesListForm
-          onSubmit={handleCoursesChange}
           value={student.coursesList}
+          onSubmit={handleCoursesChange}
         />
       </div>
-
       <div className="Actions">
         <button onClick={handleSubmit}>Submit</button>
         <button onClick={handleClear}>Clear</button>
       </div>
+      {
+      Boolean(errorsList.length) && (
+        <div>
+          <h4>You have the following error/s</h4>
+        {
+
+          errorsList.map((error) => (
+            <p key={error}>{error}</p>
+          ))
+
+        }
+        </div>
+      )}
     </div>
   );
 };

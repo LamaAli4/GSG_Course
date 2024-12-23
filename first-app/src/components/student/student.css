@@ -1,7 +1,7 @@
 .std-wrapper {
   background-color: #ffffff;
   border-radius: 20px;
-  box-shadow: 4px 4px 9px -7px #d2d2d2;
+  box-shadow: 4px 4px 9px -7px #b4b4b4;
   padding: 16px;
   margin-bottom: 20px;
 }
@@ -30,5 +30,5 @@
   display: flex;
   justify-content: flex-end;
   column-gap: 10px;
-
+  margin-top: 20px;
 }

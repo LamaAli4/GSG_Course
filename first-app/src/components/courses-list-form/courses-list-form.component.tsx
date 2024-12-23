@@ -4,32 +4,32 @@ interface IProps {
   value: string[];
   onSubmit: (list: string[]) => void;
 }
+
 const CoursesListForm = (props: IProps) => {
-  const [courseList, setCourseList] = useState<string[]>(props.value);
+  const [courseList, setCoursesList] = useState<string[]>(props.value);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const newCourse = event.currentTarget["courseName"].value;
     const newList = [...courseList, newCourse];
-    setCourseList(newList);
+    setCoursesList(newList);
     props.onSubmit(newList);
-  };
+  }
+
   return (
-    <div>
-      <form className="addCourseForm" onSubmit={handleSubmit}>
+    <div className="addCourseForm">
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="cName">Enter Course: </label>
           <input id="cName" type="text" name="courseName" />
         </div>
         <button type="submit">Add Course</button>
       </form>
-      <ul>
-        {courseList.map((course, index) => (
-          <li key={course + index}>{course}</li>
-        ))}
+      <ul >
+        {courseList.map((course, index) => <li key={course + index}>{course}</li>)}
       </ul>
     </div>
-  );
+  )
 };
 
 export default CoursesListForm;
