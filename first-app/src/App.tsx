@@ -56,6 +56,7 @@ function App() {
 
   const handleAbsentChange = (name: string, change: number) => {
     setTotalAbsents(totalAbsents + change);
+    console.log(name)
   }
 
   const handleAddStudent = (newStudent: IStudent) => {

@@ -1,3 +1,4 @@
+
 interface IProps {
   list: string[];
 }
