@@ -14,7 +14,7 @@ const CoursesListForm = (props: IProps) => {
     const newList = [...courseList, newCourse];
     setCoursesList(newList);
     props.onSubmit(newList);
-  }
+  };
 
   return (
     <div className="addCourseForm">
@@ -25,11 +25,13 @@ const CoursesListForm = (props: IProps) => {
         </div>
         <button type="submit">Add Course</button>
       </form>
-      <ul >
-        {courseList.map((course, index) => <li key={course + index}>{course}</li>)}
+      <ul>
+        {courseList.map((course, index) => (
+          <li key={course + index}>{course}</li>
+        ))}
       </ul>
     </div>
-  )
+  );
 };
 
 export default CoursesListForm;
