@@ -1,13 +1,22 @@
-import { ITodoItem } from "../types";
-import "./dashboard.css";
+import { useMemo } from 'react';
+import { ITodoItem } from '../types';
+import './dashboard.css';
 
 interface IProps {
   items: ITodoItem[];
 }
 
 const Dashboard = (props: IProps) => {
-  const urgentCount = props.items.filter((item) => item.isUrgent).length;
-  const completedCount = props.items.filter((item) => item.isDone).length;
+  console.log("Re render [Dashboard]");
+
+  const urgentCount = useMemo(() => {
+    return props.items.filter(item => item.isUrgent).length;
+  }, [props.items]);
+
+  const completedCount = useMemo(() => {
+    console.log("calc completedCount");
+    return props.items.filter(item => item.isDone).length;
+  }, [props.items]);
 
   return (
     <div className="dashboard-wrapper">
@@ -24,7 +33,7 @@ const Dashboard = (props: IProps) => {
         <span>Completed Tasks</span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
