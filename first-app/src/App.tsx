@@ -1,53 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { IStudent } from "./types";
 
 import Student from "./components/student/student.component";
 import AddForm from "./components/add-form/add-form.component";
+import useLocalStorage from "./hooks/localStorage.hook";
 
 function App() {
-  const [studentsList, setStudentsList] = useState<IStudent[]>([]);
+  const [studentsList, setStudentsList] = useLocalStorage<IStudent[]>(
+    "students-list",
+    []
+  );
   const [totalAbsents, setTotalAbsents] = useState(0);
 
-  // console.log("Hello from APP component [rendering]!");
   useEffect(() => {
-    console.log("Hello from APP component!");
-    const storedData: IStudent[] = JSON.parse(
-      localStorage.getItem("students-list") || "[]"
-    );
-    const totalAbs = storedData.reduce((prev, cur) => {
-      return prev + cur.absents;
-    }, 0);
+    const totalAbs = studentsList.reduce((prev, cur) => prev + cur.absents, 0);
     setTotalAbsents(totalAbs);
-    setStudentsList(storedData);
-    return () => {
-      // Cleanup function
-      // This wil run when the App component is unmounted
-    };
-  }, []);
-
-  useEffect(() => {
-    storeData(studentsList);
   }, [studentsList]);
-
-  /*
-    useEffect(() => {
-      let sum = 0;
-      for (let i = 0; i < marks.length; i++) {
-        sum += marks[i];
-      }
-      const avg = (sum / coursesCount) / passedHours;
-      console.log(avg);
-    }, [marks, coursesCount, passedHours]);
-  */
-
-  // useEffect(() => {
-  //   console.log("Data changed!");
-  // }, [studentsList]);
-
-  const storeData = (newData: IStudent[]) => {
-    localStorage.setItem("students-list", JSON.stringify(newData));
-  };
 
   const removeFirst = () => {
     const newList = [...studentsList];
