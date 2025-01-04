@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { IStudent } from "./types";
 
@@ -12,6 +12,7 @@ function App() {
     []
   );
   const [totalAbsents, setTotalAbsents] = useState(0);
+  const lastStdRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const totalAbs = studentsList.reduce((prev, cur) => prev + cur.absents, 0);
@@ -37,6 +38,12 @@ function App() {
     setStudentsList([newStudent, ...studentsList]);
   };
 
+  const scrollToLast = () => {
+    if (lastStdRef.current) {
+      lastStdRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const h1Style = { color: "#69247C", fontSize: "24px" };
 
   return (
@@ -45,6 +52,7 @@ function App() {
       <AddForm className="addForm" onSubmit={handleAddStudent} />
       <div className="stats">
         <button onClick={removeFirst}>POP Student</button>
+        <button onClick={scrollToLast}>Scroll To Last</button>
         <b style={{ fontSize: "12px", fontWeight: 100, color: "gray" }}>
           Total Absents {totalAbsents}
         </b>
@@ -61,6 +69,7 @@ function App() {
           onAbsentChange={handleAbsentChange}
         />
       ))}
+      <div ref={lastStdRef}></div>
     </div>
   );
 }

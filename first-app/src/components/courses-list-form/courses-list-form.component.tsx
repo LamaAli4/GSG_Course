@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface IProps {
   value: string[];
@@ -7,6 +7,8 @@ interface IProps {
 
 const CoursesListForm = (props: IProps) => {
   const [courseList, setCoursesList] = useState<string[]>(props.value);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setCoursesList(props.value);
@@ -18,6 +20,11 @@ const CoursesListForm = (props: IProps) => {
     const newList = [...courseList, newCourse];
     setCoursesList(newList);
     props.onSubmit(newList);
+
+    
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   return (
@@ -25,7 +32,13 @@ const CoursesListForm = (props: IProps) => {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="cName">Enter Course: </label>
-          <input id="cName" type="text" name="courseName" required />
+          <input
+            ref={inputRef}
+            id="cName"
+            type="text"
+            name="courseName"
+            required
+          />
         </div>
         <button type="submit">Add Course</button>
       </form>

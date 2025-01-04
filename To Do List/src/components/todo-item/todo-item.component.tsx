@@ -1,20 +1,16 @@
-import { Trash } from "@phosphor-icons/react";
-import "./todo-item.css";
-import { ITodoItem } from "../types";
+import { Trash } from '@phosphor-icons/react';
+import './todo-item.css'
+import { ITodoItem } from '../types';
 
 interface IProps {
-  data: ITodoItem;
-  onToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDelete: () => void;
-}
+  data: ITodoItem
+  onToggle: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onDelete: () => void
+};
 
 const TodoItem = ({ data, onToggle, onDelete }: IProps) => {
   return (
-    <div
-      className={`item-wrapper ${data.isDone ? "done" : ""} ${
-        data.isUrgent ? "urgent" : ""
-      }`}
-    >
+    <div className={`item-wrapper ${data.isDone ? 'done' : ''} ${data.isUrgent ? 'urgent' : ''}`}>
       <span className="item-details">
         <div className="round-checkbox">
           <input
@@ -28,15 +24,9 @@ const TodoItem = ({ data, onToggle, onDelete }: IProps) => {
         </div>
         <span>{data.title}</span>
       </span>
-      <Trash
-        className="delete"
-        size={20}
-        color="#cf2020"
-        weight="fill"
-        onClick={onDelete}
-      />
+      <Trash className="delete" size={20} color="#cf2020" weight="fill" onClick={onDelete} />
     </div>
-  );
-};
+  )
+}
 
 export default TodoItem;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IStudent } from "../../types";
 import CoursesList from "../course-list/courses-list.component";
 import "./student.css";
@@ -11,11 +11,10 @@ const Student = (props: IProps) => {
   const [absents, setAbsents] = useState(props.absents);
   const [absentColor, setAbsentColor] = useState("#213547");
 
+  const prevAbsents = useRef<number>(props.absents);
+
   // useEffect(() => {
-  //   // setAbsents(absents + 1);   // This will lead to a infinity loop
-  //   if (absents > 10) {
-  //     setAbsents(0);
-  //   }
+  //   prevAbsents.current = absents;
   // }, [absents]);
 
   useEffect(() => {
@@ -43,11 +42,15 @@ const Student = (props: IProps) => {
   }, []);
 
   const addAbsent = () => {
+    prevAbsents.current = absents;
+
     setAbsents(absents + 1);
     props.onAbsentChange(props.id, +1);
   };
 
   const removeAbsent = () => {
+    prevAbsents.current = absents;
+
     if (absents - 1 >= 0) {
       setAbsents(absents - 1);
       props.onAbsentChange(props.id, -1);
@@ -55,6 +58,8 @@ const Student = (props: IProps) => {
   };
 
   const resetAbsent = () => {
+    prevAbsents.current = absents;
+
     setAbsents(0);
     props.onAbsentChange(props.id, -absents);
   };
@@ -78,6 +83,8 @@ const Student = (props: IProps) => {
         <CoursesList list={props.coursesList} />
       </div>
       <div className="absents">
+        <b style={{ color: absentColor }}>Prev Absents:</b>{" "}
+        {prevAbsents.current}
         <b style={{ color: absentColor }}>Absents:</b> {absents}
         <button onClick={addAbsent}>+</button>
         <button onClick={removeAbsent}>-</button>
