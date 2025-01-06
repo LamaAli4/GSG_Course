@@ -12,7 +12,7 @@ body {
 
 .main {
   max-width: 600px;
-  background-color: #F9E6CF;
+  background-color: #f9e6cf;
   margin: 0 auto;
   padding: 30px 20px;
 }
@@ -21,12 +21,21 @@ body {
   margin-top: 0;
 }
 
-.main>.stats {
+.main > .stats {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .main.wrapper {
-  border-left: 8px solid #DA498D;
+  border-left: 8px solid #da498d;
+}
+
+nav {
+  margin: 20px 0;
+  border-top: 2px solid #da498d;
+  border-bottom: 2px solid #da498d;
+  padding: 5px 0;
+  display: flex;
+  column-gap: 10px;
 }
