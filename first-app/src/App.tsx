@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { IStudent } from "./types";
 
@@ -7,17 +7,20 @@ import AddForm from "./components/add-form/add-form.component";
 import useLocalStorage from "./hooks/localStorage.hook";
 
 function App() {
-  const [studentsList, setStudentsList] = useLocalStorage<IStudent[]>(
-    "students-list",
-    []
-  );
+  const [studentsList, setStudentsList] = useState<IStudent[]>([]);
   const [totalAbsents, setTotalAbsents] = useState(0);
-  const lastStdRef = useRef<HTMLDivElement>(null)
+  const lastStdRef = useRef<HTMLDivElement>(null);
+
+  const { storedData } = useLocalStorage(studentsList, "students-list");
 
   useEffect(() => {
-    const totalAbs = studentsList.reduce((prev, cur) => prev + cur.absents, 0);
+    const stdList: IStudent[] = storedData || [];
+    const totalAbs = stdList.reduce((prev, cur) => {
+      return prev + cur.absents;
+    }, 0);
     setTotalAbsents(totalAbs);
-  }, [studentsList]);
+    setStudentsList(stdList);
+  }, [storedData]);
 
   const removeFirst = () => {
     const newList = [...studentsList];
@@ -52,7 +55,7 @@ function App() {
       <AddForm className="addForm" onSubmit={handleAddStudent} />
       <div className="stats">
         <button onClick={removeFirst}>POP Student</button>
-        <button onClick={scrollToLast}>Scroll To Last</button>
+        <button onClick={scrollToLast}>Scroll to Last</button>
         <b style={{ fontSize: "12px", fontWeight: 100, color: "gray" }}>
           Total Absents {totalAbsents}
         </b>

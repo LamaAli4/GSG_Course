@@ -1,24 +1,31 @@
 import { useEffect, useState } from "react";
 
-const useLocalStorage = <T>(storageKey: string, initialValue: T) => {
-  const [storedData, setStoredData] = useState<T>(() => {
-    try {
-      const strData = localStorage.getItem(storageKey);
-      return strData ? JSON.parse(strData) : initialValue;
-    } catch {
-      return initialValue;
-    }
-  });
+const useLocalStorage = (state: any, storageKey: string) => {
+  const [storedData, setStoredData] = useState<any>();
 
   useEffect(() => {
+    // Read the data on the first render
+    const strData = localStorage.getItem(storageKey);
     try {
-      localStorage.setItem(storageKey, JSON.stringify(storedData));
-    } catch (error) {
-      console.error("Failed to save to localStorage", error);
+      if (strData !== null) {
+        setStoredData(JSON.parse(strData));
+      } else {
+        setStoredData(null);
+      }
+    } catch {
+      setStoredData(strData);
     }
-  }, [storedData, storageKey]);
+  }, []);
 
-  return [storedData, setStoredData] as const;
-};
+  useEffect(() => {
+    if (typeof (state) === 'object') {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    } else {
+      localStorage.setItem(storageKey, state.toString());
+    }
+  }, [state, storageKey]);
+
+  return { storedData };
+}
 
 export default useLocalStorage;

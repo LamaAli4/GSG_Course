@@ -7,7 +7,6 @@ interface IProps {
 
 const CoursesListForm = (props: IProps) => {
   const [courseList, setCoursesList] = useState<string[]>(props.value);
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const CoursesListForm = (props: IProps) => {
     setCoursesList(newList);
     props.onSubmit(newList);
 
-    
     if (inputRef.current) {
       inputRef.current.value = "";
     }

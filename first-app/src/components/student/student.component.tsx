@@ -10,8 +10,7 @@ interface IProps extends IStudent {
 const Student = (props: IProps) => {
   const [absents, setAbsents] = useState(props.absents);
   const [absentColor, setAbsentColor] = useState("#213547");
-
-  const prevAbsents = useRef<number>(props.absents);
+  const prevAbsents = useRef<number>(props.absents); // useRef(initialValue)
 
   // useEffect(() => {
   //   prevAbsents.current = absents;
@@ -43,15 +42,13 @@ const Student = (props: IProps) => {
 
   const addAbsent = () => {
     prevAbsents.current = absents;
-
     setAbsents(absents + 1);
     props.onAbsentChange(props.id, +1);
   };
 
   const removeAbsent = () => {
-    prevAbsents.current = absents;
-
     if (absents - 1 >= 0) {
+      prevAbsents.current = absents;
       setAbsents(absents - 1);
       props.onAbsentChange(props.id, -1);
     }
@@ -59,7 +56,6 @@ const Student = (props: IProps) => {
 
   const resetAbsent = () => {
     prevAbsents.current = absents;
-
     setAbsents(0);
     props.onAbsentChange(props.id, -absents);
   };
