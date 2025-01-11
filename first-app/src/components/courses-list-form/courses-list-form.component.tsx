@@ -29,7 +29,9 @@ const CoursesListForm = (props: IProps) => {
     <div className="addCourseForm">
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="cName">Enter Course: </label>
+          <label style={{ marginRight: "10px" }} htmlFor="cName">
+            Enter Course:{" "}
+          </label>
           <input
             ref={inputRef}
             id="cName"
