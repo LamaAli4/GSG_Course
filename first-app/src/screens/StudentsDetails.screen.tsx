@@ -17,7 +17,6 @@ const StudentDetails = () => {
       if (std) {
         setCurrentStudent(std);
       } else {
-        // TODO: redirect
         navigate("/404");
       }
     }
