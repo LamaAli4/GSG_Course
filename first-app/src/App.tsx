@@ -2,19 +2,20 @@ import "./App.css";
 import Main from "./screens/Main.screen";
 import About from "./screens/About.screen";
 import NotFound from "./screens/NotFound.screen";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import StudentDetails from "./screens/StudentsDetails.screen";
 import { useState, useEffect } from "react";
 import useLocalStorage from "./hooks/localStorage.hook";
 import { IStudent } from "./types";
 import AddStudent from "./screens/AddStudent.screen";
+import Login from "./screens/Login.screen";
+import NavBar from "./components/nav-bar/nav-bar.component";
 
 function App() {
   const h1Style = { color: "#69247C", fontSize: "24px" };
 
   const [studentsList, setStudentsList] = useState<IStudent[]>([]);
   const [totalAbsents, setTotalAbsents] = useState(0);
-  const location = useLocation();
 
   const { storedData } = useLocalStorage(studentsList, "students-list");
 
@@ -49,23 +50,7 @@ function App() {
   return (
     <div className="main wrapper">
       <h1 style={h1Style}>Welcome to GSG React/Next Course</h1>
-      <nav>
-        <Link to="/" className={location.pathname === "/" ? "active" : ""}>
-          Home Page
-        </Link>
-        <Link
-          to="/add"
-          className={location.pathname === "/add" ? "active" : ""}
-        >
-          Add Student
-        </Link>
-        <Link
-          to="/about"
-          className={location.pathname === "/about" ? "active" : ""}
-        >
-          About App
-        </Link>
-      </nav>
+      <NavBar />
       <Routes>
         <Route
           path="/"
@@ -81,6 +66,7 @@ function App() {
         <Route path="/add" element={<AddStudent onAdd={handleAddStudent} />} />
         <Route path="/about" element={<About />} />
         <Route path="/student/:id" element={<StudentDetails />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

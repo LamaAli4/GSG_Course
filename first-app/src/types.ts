@@ -1,8 +1,13 @@
 export interface IStudent {
-    id: string;
-    name: string;
-    age: number;
-    isGraduated: boolean;
-    coursesList: string[];
-    absents: number
-  }
+  id: string;
+  name: string;
+  age: number;
+  absents: number;
+  isGraduated: boolean;
+  coursesList: string[];
+}
+
+export interface IUserData {
+  userName: string;
+  role: string;
+}

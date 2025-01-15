@@ -18,8 +18,7 @@ body {
   margin-top: 0;
 }
 
-.main-screen > .stats,
-.main-screen > .filter {
+.main-screen>.stats, .main-screen>.filter {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 10px;
@@ -27,35 +26,12 @@ body {
   align-items: center;
 }
 
-.main-screen > .stats > :last-child {
+.main-screen>.stats>:last-child {
   margin-left: auto;
 }
 
 .main.wrapper {
-  border-left: 8px solid #da498d;
-}
-
-nav {
-  margin: 20px 0;
-  border-bottom: 2px solid #da498d;
-  display: flex;
-  column-gap: 10px;
-}
-
-nav > a {
-  padding: 3px;
-  font-size: 18px;
-  font-weight: 400;
-  /* TODO: selected tab */
-}
-
-nav > a:hover {
-  text-shadow: 0px 0px 2px rgb(105, 36, 124);
-  color: #93729d;
-}
-
-nav > a.active {
-  border-bottom: 3px solid #da498d;
+  border-left: 8px solid #DA498D;
 }
 
 .main-screen .list {
@@ -67,7 +43,7 @@ nav > a.active {
   margin-top: 20px;
 }
 
-.main-screen .list > .std-wrapper {
+.main-screen .list>.std-wrapper {
   flex: 0;
   flex-basis: 43%;
 }
@@ -75,20 +51,19 @@ nav > a.active {
 [class$="-screen"] h2 {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #da498d;
+  color: #DA498D;
   text-transform: uppercase;
   text-align: left;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.add-screen,
-.about-screen {
+.add-screen, .about-screen {
   min-height: 500px;
 }
 
 div.spinner {
   border: 8px solid #f3f3f3;
-  border-top: 8px solid #da498d;
+  border-top: 8px solid #DA498D;
   border-radius: 50%;
   width: 50px;
   height: 50px;
