@@ -10,6 +10,7 @@ import { IStudent } from "./types";
 import AddStudent from "./screens/AddStudent.screen";
 import Login from "./screens/Login.screen";
 import NavBar from "./components/nav-bar/nav-bar.component";
+import Guarded from "./components/common/guarded-route/guarded-route.component";
 
 function App() {
   const h1Style = { color: "#69247C", fontSize: "24px" };
@@ -63,9 +64,9 @@ function App() {
             />
           }
         />
-        <Route path="/add" element={<AddStudent onAdd={handleAddStudent} />} />
+        <Route path="/add" element={<Guarded> <AddStudent onAdd={handleAddStudent} /> </Guarded>} />
         <Route path="/about" element={<About />} />
-        <Route path="/student/:id" element={<StudentDetails />} />
+        <Route path="/student/:id" element={<Guarded><StudentDetails/></Guarded>} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
