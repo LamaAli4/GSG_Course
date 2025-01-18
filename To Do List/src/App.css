@@ -1,7 +1,15 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  h1 {
-    font-size: 16px;
-  }
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  font-size: 16px;
+}
+
+h1.light {
+  color: #000;
+}
+
+h1.dark {
+  color: #fff;
+}

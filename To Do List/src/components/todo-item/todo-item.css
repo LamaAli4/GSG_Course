@@ -6,6 +6,11 @@
   align-items: center;
 }
 
+.item-wrapper.dark {
+  border-color: white;
+  color: white;
+}
+
 .item-wrapper.done {
   text-decoration: line-through;
   order: 999999;

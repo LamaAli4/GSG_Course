@@ -1,13 +1,14 @@
-import React from 'react';
-import './form.css';
-import { ITodoItem } from '../types';
+import React, { useContext } from "react";
+import "./form.css";
+import { ITodoItem } from "../types";
+import { ThemeContext } from "../../main";
 
 interface IProps {
   onSubmit: (item: ITodoItem) => void;
 }
 
 const Form = React.memo((props: IProps) => {
-  console.log("Re render [form]");
+  const { theme } = useContext(ThemeContext);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,23 +19,28 @@ const Form = React.memo((props: IProps) => {
         id: Date.now(),
         title,
         isUrgent,
-        isDone: false
-      }
+        isDone: false,
+      };
 
       props.onSubmit(newTask);
     }
-  }
+  };
 
   return (
-    <form className="form-wrapper" onSubmit={handleSubmit}>
-      <input className="task-input" type="text" name="task" placeholder="Type todo here..." />
+    <form className={`form-wrapper ${theme}`} onSubmit={handleSubmit}>
+      <input
+        className="task-input"
+        type="text"
+        name="task"
+        placeholder="Type todo here..."
+      />
       <div>
         <input type="checkbox" id="urgent" name="urgent" />
         <label htmlFor="urgent">Urgent</label>
       </div>
       <input className="submit" type="submit" value="Add Todo" />
     </form>
-  )
+  );
 });
 
 export default Form;
