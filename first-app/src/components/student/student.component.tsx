@@ -6,7 +6,6 @@ import Absents from "../absents/absents.component";
 
 interface IProps extends IStudent {
   mode: "details" | "list";
-  onAbsentChange?: (id: string, change: number) => void;
 }
 
 const Student = (props: IProps) => {
@@ -33,9 +32,7 @@ const Student = (props: IProps) => {
         <b>Courses List:</b>
         <CoursesList list={props.coursesList} />
       </div>
-      {props.mode === "list" && (
-        <Absents onAbsentChange={props.onAbsentChange} {...props} />
-      )}
+      {props.mode === "list" && <Absents {...props} />}
     </div>
   );
 };

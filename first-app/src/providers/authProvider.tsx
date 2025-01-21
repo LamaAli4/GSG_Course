@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IUserData } from "../types";
+import useLocalStorage from "../hooks/localStorage.hook";
 
 export interface IAuthContext {
   user: IUserData | null;
@@ -7,14 +8,17 @@ export interface IAuthContext {
   logout: () => void;
 }
 
-export const AuthContext = createContext<IAuthContext>({
-  user: null,
-  login: () => {},
-  logout: () => {},
-});
+export const AuthContext = createContext<IAuthContext>({ user: null, login: () => { }, logout: () => { } });
 
 export const AuthProvider = (props: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUserData | null>(null);
+  const { storedData } = useLocalStorage(user, 'auth-user');
+
+  useEffect(() => {
+    if (storedData !== undefined) {
+      setUser(storedData);
+    }
+  }, [storedData])
 
   const login = (data: IUserData) => {
     if (data.userName.length >= 3) {
@@ -22,15 +26,13 @@ export const AuthProvider = (props: { children: React.ReactNode }) => {
     } else {
       setUser(null);
     }
-  };
+  }
 
   const logout = () => {
     setUser(null);
-  };
+  }
 
   const data = { user, login, logout };
 
-  return (
-    <AuthContext.Provider value={data}>{props.children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={data}>{props.children}</AuthContext.Provider>;
 };
