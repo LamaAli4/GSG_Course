@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "./App.css";
-import Student from "./assets/components/student/student.component";
 import { IStudent } from "./types";
+
+import Student from "./assets/components/student/student.component";
+import AddForm from "./assets/components/add-form/add-form.component";
 
 
 const COURSES_LIST = ["React", "HTML", "CSS"];
@@ -62,6 +64,7 @@ function App() {
   return (
     <div>
       <h1 style={{ color: "#a3ff55" }}>Welcome to GSG React/Next Course</h1>
+      <AddForm/>
       <button onClick={removeLast}>Remove Last Student</button>
       <b>Total Absents {totalAbsents}</b>
       {
