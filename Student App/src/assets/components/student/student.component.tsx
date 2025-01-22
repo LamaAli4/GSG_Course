@@ -1,14 +1,29 @@
+import { useState } from "react";
+import { IStudent } from "../../../types";
 import CoursesList from "../courses-list/courses-list.component";
 import "./student.css";
 
-interface IProps {
-  name: string;
-  age: number;
-  isGraduated: boolean;
-  coursesList: string[];
+interface IProps extends IStudent {
 }
 const Student = (props: IProps) => {
-  //   console.log(props);
+    
+    const [absents, setAbsents] = useState(0)
+
+    const addAbsent = () => {
+        setAbsents(absents + 1) 
+    } 
+
+    const removeAbsent = () => {
+        if (absents - 1 >= 0) {
+          setAbsents(absents - 1)
+        } 
+    } 
+
+    const resetAbsent = () => {
+        setAbsents(0)
+    } 
+
+
   return (
     <div className="std-wrapper">
       <div>
@@ -20,6 +35,12 @@ const Student = (props: IProps) => {
       <div>
         <b>Is Graduated:</b> {props.isGraduated ? "Yes" : "No"}
       </div>
+      <div>
+        <b>Absents:</b> {absents}
+        <button onClick={addAbsent}>+</button>
+        <button onClick={removeAbsent}>-</button>
+        <button onClick={resetAbsent}>Reset</button>
+      </div> 
       <CoursesList list={props.coursesList} />
       <hr />
     </div>
