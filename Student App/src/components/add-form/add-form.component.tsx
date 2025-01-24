@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./add-form.css";
 import { IStudent } from "../../types";
 import CoursesListForm from "../courses-list-form/courses-list-form.component";
-import { validateStudent } from "../../utils/validation"
+import { validateStudent } from "../../utils/validation";
 
 const INITIAL_STUDENT = {
   age: 0,
@@ -28,8 +28,8 @@ const AddForm = (props: IProps) => {
 
   const handleSubmit = () => {
     const newStudent: IStudent = { ...student, id: Date.now().toString() };
- 
-    const errors = validateStudent(newStudent)
+
+    const errors = validateStudent(newStudent);
     if (errors.length > 0) {
       setErrorsList(errors);
     } else {
@@ -37,8 +37,6 @@ const AddForm = (props: IProps) => {
       props.onSubmit(newStudent);
       handleClear();
     }
-   
-    
   };
 
   const handleClear = () => {
@@ -52,8 +50,8 @@ const AddForm = (props: IProps) => {
   return (
     <div className={`wrapper ${props.className} ${isOpen ? "open" : "closed"}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <span>&and;</span> : <span>&or;</span>}{" "}
-        {isOpen ? "Hide" : "Show"} Add Form
+        {isOpen ? <span>&and; close </span> : <span>&or; open </span>}
+        Add Form
       </button>
       <div className="input">
         <label htmlFor="name">Student Name: </label>
@@ -91,19 +89,24 @@ const AddForm = (props: IProps) => {
         />
       </div>
       <div className="Actions">
-        <button onClick={handleSubmit}>Submit</button>
+        <button
+          onClick={handleSubmit}
+          style={{ color: errorsList.length ? "red" : "initial" }}
+          // disabled={ errorsList.length > 0}
+        >
+          Submit
+        </button>
         <button onClick={handleClear}>Clear</button>
       </div>
-      {
-        errorsList.length > 0 ? 
-          <div>
+
+      {Boolean(errorsList.length) && (
+        <div>
           <h4>you have the following error/s</h4>
-            {
-              errorsList.map(error => <p key={error}>{error}</p>)
-            }
-          </div>  
-          : null
-      }
+          {errorsList.map((error) => (
+            <p key={error}>{error}</p>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
