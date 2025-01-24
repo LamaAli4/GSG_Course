@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./App.css";
 import { IStudent } from "./types";
 
-import Student from "./assets/components/student/student.component";
-import AddForm from "./assets/components/add-form/add-form.component";
+import Student from "./components/student/student.component";
+import AddForm from "./components/add-form/add-form.component";
 
-const COURSES_LIST = ["React", "HTML", "CSS"];
+const COURSES_LIST: string[] = ["React", "HTML", "CSS"];
 const INITIAL_LIST: Array<IStudent> = [
   {
     id: "2401",
@@ -37,7 +37,7 @@ const INITIAL_LIST: Array<IStudent> = [
   },
   {
     id: "2405",
-    name: "Mohammed Ahmad",
+    name: "Mohammad Ahmad",
     age: 22,
     isGraduated: true,
     coursesList: COURSES_LIST,
@@ -48,9 +48,9 @@ function App() {
   const [studentsList, setStudentsList] = useState<IStudent[]>(INITIAL_LIST);
   const [totalAbsents, setTotalAbsents] = useState(0);
 
-  const removeLast = () => {
+  const removeFirst = () => {
     const newList = [...studentsList];
-    newList.shift();
+    newList.shift(); // removes the first item
     setStudentsList(newList);
   };
 
@@ -61,12 +61,18 @@ function App() {
   const handleAddStudent = (newStudent: IStudent) => {
     setStudentsList([newStudent, ...studentsList]);
   };
+
+  const h1Style = { color: "#69247C", fontSize: "24px" };
   return (
-    <div>
-      <h1 style={{ color: "#a3ff55" }}>Welcome to GSG React/Next Course</h1>
-      <AddForm onSubmit={handleAddStudent} />
-      <button onClick={removeLast}>Remove Last Student</button>
-      <b>Total Absents {totalAbsents}</b>
+    <div className="main wrapper">
+      <h1 style={h1Style}>Welcome to GSG React/Next Course</h1>
+      <AddForm className="addForm" onSubmit={handleAddStudent} />
+      <div className="stats">
+        <button onClick={removeFirst}>POP Student</button>
+        <b style={{ fontSize: "12px", fontWeight: 100, color: "gray" }}>
+          Total Absents {totalAbsents}
+        </b>
+      </div>
       {studentsList.map((student) => (
         <Student
           key={student.id}
