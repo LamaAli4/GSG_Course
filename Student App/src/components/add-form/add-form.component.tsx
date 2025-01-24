@@ -100,7 +100,7 @@ const AddForm = (props: IProps) => {
       </div>
 
       {Boolean(errorsList.length) && (
-        <div>
+        <div className="report">
           <h4>you have the following error/s</h4>
           {errorsList.map((error) => (
             <p key={error}>{error}</p>
