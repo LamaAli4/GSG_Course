@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./add-form.css";
 import { IStudent } from "../../types";
 import CoursesListForm from "../courses-list-form/courses-list-form.component";
@@ -10,6 +10,7 @@ const INITIAL_STUDENT = {
   id: "",
   isGraduated: false,
   name: "",
+  absents: 0
 };
 
 interface IProps {
@@ -21,6 +22,10 @@ const AddForm = (props: IProps) => {
   const [student, setStudent] = useState<IStudent>(INITIAL_STUDENT);
   const [isOpen, setIsOpen] = useState(false);
   const [errorsList, setErrorsList] = useState<string[]>([]);
+
+      useEffect(() => {
+        console.log("Hello from Add Form component!")
+      }, [])
 
   const handleChange = (field: string, value: any) => {
     setStudent({ ...student, [field]: value });
