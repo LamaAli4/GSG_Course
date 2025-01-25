@@ -59,12 +59,14 @@ function App() {
     setTotalAbsents(totalAbs);
     setStudentsList(storedData);
 
-    return () => {};
+    return () => {
+      // This will run when the App Component is unmounted
+    };
   }, []);
 
   useEffect(() => {
     storeData(studentsList);
-  }, [studentsList]);
+  }, [studentsList, totalAbsents]);
 
   const storeData = (newData: IStudent[]) => {
     localStorage.setItem("students-list", JSON.stringify(newData));

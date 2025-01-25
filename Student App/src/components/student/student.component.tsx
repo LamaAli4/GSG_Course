@@ -9,6 +9,27 @@ interface IProps extends IStudent {
 
 const Student = (props: IProps) => {
   const [absents, setAbsents] = useState(props.absents);
+  const [absentColor, setAbsentColor] = useState("#213547");
+
+  // useEffect(() => {
+  //   if (absents > 10) {
+  //     setAbsents(0);
+  //   }
+
+  // }, [absents]);
+
+  useEffect(() => {
+    if (absents > 10) {
+      setAbsentColor("#ff0000");
+    } else if (absents >= 7) {
+      setAbsentColor("#fd9c0e");
+    } else if (absents >= 5) {
+      setAbsentColor("#d6c728");
+    } else {
+      setAbsentColor("#213547");
+      
+    }
+  }, [absents]);
 
   useEffect(() => {
     console.log("Hello from Student component!");
@@ -16,9 +37,9 @@ const Student = (props: IProps) => {
     // The code in this function will be called on the unmount
     return () => {
       console.log(`Student: ${props.name}, has been deleted!`);
-      if (confirm("Do you want to back up the item before deletion! ")) {
-        localStorage.setItem("back-up", JSON.stringify(props));
-      }
+      // if (confirm("Do you want to back up the item before deletion! ")) {
+      //   localStorage.setItem("back-up", JSON.stringify(props));
+      // }
     };
   }, []);
 
@@ -58,7 +79,7 @@ const Student = (props: IProps) => {
         <CoursesList list={props.coursesList} />
       </div>
       <div className="absents">
-        <b>Absents:</b> {absents}
+        <b style={{ color: absentColor }}>Absents:</b> {absents}
         <button onClick={addAbsent}>+</button>
         <button onClick={removeAbsent}>-</button>
         <button onClick={resetAbsent}>Reset</button>
