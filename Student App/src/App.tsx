@@ -4,6 +4,7 @@ import { IStudent } from "./types";
 
 import Student from "./components/student/student.component";
 import AddForm from "./components/add-form/add-form.component";
+import useLocalStorage from "./hooks/local-storage.hook";
 
 //   {
 //     id: "2401",
@@ -46,31 +47,16 @@ function App() {
   const [studentsList, setStudentsList] = useState<IStudent[]>([]);
   const [totalAbsents, setTotalAbsents] = useState(0);
 
-  // console.log("Hello from App component [rendering]!")
+  const { storedData } = useLocalStorage(studentsList, "students-list");
 
   useEffect(() => {
-    console.log("Hello from App component! ");
-    const storedData: IStudent[] = JSON.parse(
-      localStorage.getItem("students-list") || "[]"
-    );
-    const totalAbs = storedData.reduce((prev, cur) => {
+    const stdList: IStudent[] = storedData || [];
+    const totalAbs = stdList.reduce((prev, cur) => {
       return prev + cur.absents;
     }, 0);
     setTotalAbsents(totalAbs);
-    setStudentsList(storedData);
-
-    return () => {
-      // This will run when the App Component is unmounted
-    };
-  }, []);
-
-  useEffect(() => {
-    storeData(studentsList);
-  }, [studentsList, totalAbsents]);
-
-  const storeData = (newData: IStudent[]) => {
-    localStorage.setItem("students-list", JSON.stringify(newData));
-  };
+    setStudentsList(stdList);
+  }, [storedData]);
 
   const removeFirst = () => {
     const newList = [...studentsList];
@@ -81,7 +67,8 @@ function App() {
   const handleAbsentChange = (id: string, change: number) => {
     setTotalAbsents(totalAbsents + change);
     setStudentsList(
-      studentsList.map(std => std.id === id ? { ...std, absents: std.absents + change } : std
+      studentsList.map((std) =>
+        std.id === id ? { ...std, absents: std.absents + change } : std
       )
     );
   };
