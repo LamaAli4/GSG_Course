@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IStudent } from "../../types";
 import CoursesList from "../courses-list/courses-list.component";
 import "./student.css";
@@ -10,14 +10,12 @@ interface IProps extends IStudent {
 const Student = (props: IProps) => {
   const [absents, setAbsents] = useState(props.absents);
   const [absentColor, setAbsentColor] = useState("#213547");
-
+  const prevAbsents = useRef<number>(props.absents); //useRef(initialValue)  
+  
   // useEffect(() => {
-  //   if (absents > 10) {
-  //     setAbsents(0);
-  //   }
-
+  //   prevAbsents.current = absents;
   // }, [absents]);
-
+  
   useEffect(() => {
     if (absents > 10) {
       setAbsentColor("#ff0000");
@@ -27,7 +25,6 @@ const Student = (props: IProps) => {
       setAbsentColor("#d6c728");
     } else {
       setAbsentColor("#213547");
-      
     }
   }, [absents]);
 
@@ -41,21 +38,24 @@ const Student = (props: IProps) => {
       //   localStorage.setItem("back-up", JSON.stringify(props));
       // }
     };
-  }, []);
+  }, [props.name]);
 
   const addAbsent = () => {
+    prevAbsents.current = absents;
     setAbsents(absents + 1);
     props.onAbsentChange(props.id, +1);
   };
-
+  
   const removeAbsent = () => {
     if (absents - 1 >= 0) {
+      prevAbsents.current = absents;
       setAbsents(absents - 1);
       props.onAbsentChange(props.id, -1);
     }
   };
-
+  
   const resetAbsent = () => {
+    prevAbsents.current = absents;
     setAbsents(0);
     props.onAbsentChange(props.id, -absents);
   };
@@ -79,7 +79,9 @@ const Student = (props: IProps) => {
         <CoursesList list={props.coursesList} />
       </div>
       <div className="absents">
+        <b style={{ color: absentColor }}>Prev Absents:</b> {prevAbsents.current}
         <b style={{ color: absentColor }}>Absents:</b> {absents}
+        <button onClick={() => { prevAbsents.current = 100; }}>Change Prev Abs</button>
         <button onClick={addAbsent}>+</button>
         <button onClick={removeAbsent}>-</button>
         <button onClick={resetAbsent}>Reset</button>
